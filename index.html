@@ -4,10 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elite360views | Immersive Google Street View & 360° Virtual Tours</title>
-  <meta name="description" content="Elite360views creates cinematic 360° virtual tours and high-impact Google Business Profile optimization for businesses across India. Help customers discover your space on Google.">
+  <meta name="description" content="Elite360views creates cinematic 360° virtual tours and high-impact Google Business Profile optimization for businesses across India.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Pannellum WebGL 360 Viewer (Ultra-smooth Real Panoramic Tour Engine) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -16,16 +21,13 @@
         extend: {
           colors: {
             brand: {
-              black: '#08090C',
-              dark: '#0F1117',
-              card: '#151821',
-              border: '#242938',
+              black: '#07080B',
+              dark: '#0D0F15',
+              card: '#12151E',
+              border: 'rgba(255,255,255,0.08)',
               gold: '#C5A059',
-              goldLight: '#E2C37E',
-              blue: '#3B82F6',
-              googleGreen: '#34A853',
-              googleRed: '#EA4335',
-              googleYellow: '#FBBC05'
+              goldLight: '#E8D19F',
+              accent: '#2563EB'
             }
           },
           fontFamily: {
@@ -39,808 +41,559 @@
   <style>
     html { scroll-behavior: smooth; }
     .gold-gradient-text {
-      background: linear-gradient(135deg, #FFF0D0 0%, #C5A059 50%, #9A7730 100%);
+      background: linear-gradient(135deg, #FFFFFF 20%, #C5A059 65%, #9E7A32 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero-glow {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(197, 160, 89, 0.12) 0%, rgba(15, 17, 23, 0) 70%);
-      top: -150px;
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
-      z-index: 0;
+    .hero-glow-bg {
+      background: radial-gradient(circle at 50% 20%, rgba(197, 160, 89, 0.15) 0%, rgba(7, 8, 11, 0.95) 75%);
     }
-    .custom-scroll::-webkit-scrollbar { width: 6px; }
-    .custom-scroll::-webkit-scrollbar-track { background: #0F1117; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #242938; border-radius: 9999px; }
+    .pnlm-load-button { background-color: #C5A059 !important; color: #000 !important; font-weight: bold; border-radius: 8px; }
   </style>
 </head>
-<body class="bg-brand-black text-gray-200 font-sans selection:bg-brand-gold selection:text-black custom-scroll antialiased">
+<body class="bg-brand-black text-gray-200 font-sans antialiased selection:bg-brand-gold selection:text-black">
 
-  <!-- TOP NOTICE BAR -->
-  <div class="bg-brand-dark/90 border-b border-brand-border/60 py-2 px-4 text-xs tracking-wider text-center flex items-center justify-center gap-2">
-    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    <span class="text-gray-400">Google Street View Trusted & Local SEO Specialists</span>
-    <span class="hidden md:inline text-gray-600">•</span>
-    <span class="hidden md:inline text-brand-goldLight font-medium">Pan-India Availability</span>
+  <!-- TOP BAR -->
+  <div class="bg-brand-dark/95 border-b border-brand-border py-2 px-4 text-[11px] uppercase tracking-wider text-center flex items-center justify-center gap-2">
+    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+    <span class="text-gray-300 font-medium">Google Street View Trusted Photographer & Local SEO Agency</span>
+    <span class="hidden sm:inline text-gray-600">•</span>
+    <span class="hidden sm:inline text-brand-gold font-semibold">Pan-India Deployments</span>
   </div>
 
   <!-- NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-brand-black/80 backdrop-blur-xl border-b border-brand-border/40">
+  <header class="sticky top-0 z-40 bg-brand-black/85 backdrop-blur-md border-b border-brand-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
-      <!-- LOGO AREA -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="relative w-11 h-11 rounded-full bg-brand-dark border border-brand-gold/40 flex items-center justify-center shadow-lg shadow-brand-gold/5 group-hover:border-brand-gold transition duration-300">
+      <!-- LOGO -->
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full border border-brand-gold/60 flex items-center justify-center bg-brand-dark/90 shadow-lg shadow-brand-gold/10">
           <svg class="w-6 h-6 text-brand-gold" viewBox="0 0 100 100" fill="none">
             <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-dasharray="190 60"/>
             <path d="M22 56C30 72 70 72 78 56" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
             <polygon points="78,48 88,56 78,64" fill="currentColor"/>
           </svg>
-          <span class="absolute text-[10px] font-bold text-white tracking-tighter">360</span>
         </div>
         <div class="flex flex-col">
-          <span class="font-display text-lg tracking-[0.2em] font-bold text-white uppercase group-hover:text-brand-gold transition">Elite<span class="text-brand-gold">360</span>Views</span>
-          <span class="text-[9px] tracking-[0.3em] uppercase text-gray-400 font-medium -mt-0.5">Virtual Tours</span>
+          <span class="font-display text-lg tracking-[0.2em] font-bold text-white uppercase">Elite<span class="text-brand-gold">360</span>Views</span>
+          <span class="text-[9px] tracking-[0.3em] uppercase text-gray-400 -mt-0.5">Virtual Tours</span>
         </div>
       </a>
 
       <!-- DESKTOP NAV -->
-      <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-300">
-        <a href="#experience" class="hover:text-brand-gold transition">Experience</a>
+      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-gray-400">
+        <a href="#experience" class="hover:text-brand-gold transition">Live 360° Tour</a>
         <a href="#services" class="hover:text-brand-gold transition">Services</a>
-        <a href="#solutions" class="hover:text-brand-gold transition">Industries</a>
-        <a href="#comparison" class="hover:text-brand-gold transition">Why Us</a>
+        <a href="#portfolio" class="hover:text-brand-gold transition">Industries</a>
+        <a href="#why" class="hover:text-brand-gold transition">Impact</a>
         <a href="#faq" class="hover:text-brand-gold transition">FAQ</a>
       </nav>
 
-      <!-- CTA BUTTONS -->
-      <div class="hidden sm:flex items-center gap-3">
-        <button onclick="openWhatsAppModal()" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg border border-brand-border hover:border-brand-gold hover:text-brand-gold transition flex items-center gap-2">
-          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+      <!-- CTA -->
+      <div class="flex items-center gap-3">
+        <button onclick="openWhatsAppModal()" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg border border-brand-border hover:border-brand-gold text-white transition">
           WhatsApp
         </button>
-        <a href="#audit" class="px-5 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-brand-gold text-black hover:bg-brand-goldLight transition shadow-lg shadow-brand-gold/20">
-          Book Audit
+        <a href="#audit" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg bg-brand-gold text-black hover:bg-brand-goldLight transition shadow-md shadow-brand-gold/20">
+          Book Shoot
         </a>
-      </div>
-
-      <!-- MOBILE HAMBURGER -->
-      <button onclick="toggleMobileNav()" class="lg:hidden p-2 text-gray-300 hover:text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-    </div>
-
-    <!-- MOBILE DRAWER -->
-    <div id="mobileDrawer" class="hidden lg:hidden bg-brand-dark border-b border-brand-border px-6 py-6 space-y-4">
-      <a href="#experience" onclick="toggleMobileNav()" class="block text-gray-300 hover:text-brand-gold font-medium">360° Experience</a>
-      <a href="#services" onclick="toggleMobileNav()" class="block text-gray-300 hover:text-brand-gold font-medium">Core Services</a>
-      <a href="#solutions" onclick="toggleMobileNav()" class="block text-gray-300 hover:text-brand-gold font-medium">Industry Solutions</a>
-      <a href="#comparison" onclick="toggleMobileNav()" class="block text-gray-300 hover:text-brand-gold font-medium">Why Strong GBP?</a>
-      <a href="#faq" onclick="toggleMobileNav()" class="block text-gray-300 hover:text-brand-gold font-medium">FAQs</a>
-      <div class="pt-4 border-t border-brand-border flex gap-3">
-        <button onclick="openWhatsAppModal(); toggleMobileNav();" class="flex-1 py-3 text-center text-xs font-bold uppercase rounded-lg border border-brand-border text-white">WhatsApp</button>
-        <a href="#audit" onclick="toggleMobileNav()" class="flex-1 py-3 text-center text-xs font-bold uppercase rounded-lg bg-brand-gold text-black">Audit Now</a>
       </div>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
-    <div class="hero-glow"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+  <!-- HERO SECTION (TURIYA CINEMATIC STYLE) -->
+  <section class="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden hero-glow-bg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
       
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-card/80 border border-brand-border text-xs text-gray-300 mb-8 backdrop-blur-md">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300 mb-8 backdrop-blur-sm">
         <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
-        <span>Google Business Profile & 360° Virtual Tour Agency</span>
+        <span class="tracking-wide">Immersive Spatial Media & Local Google Dominance</span>
       </div>
 
-      <h1 class="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.1] mb-6">
-        Make Your Business <br class="hidden sm:inline">
-        <span class="gold-gradient-text">Easier to Discover</span> on Google.
+      <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.1] mb-6">
+        Turn Physical Spaces into <br>
+        <span class="gold-gradient-text">Interactive Digital Assets</span>.
       </h1>
 
-      <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-normal leading-relaxed mb-10">
-        From complete Google Business Profile setup and Local SEO to connected Google Street View 360° walkthroughs, Elite360views helps spaces across India attract high-intent customers.
+      <p class="max-w-2xl mx-auto text-sm sm:text-base text-gray-400 leading-relaxed mb-10">
+        We capture and publish ultra-high-definition 360° Google Street View virtual tours, fix Google Maps visibility issues, and optimize Business Profiles for commercial spaces across India.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-16">
-        <a href="#audit" class="w-full sm:w-auto px-8 py-4 text-xs uppercase tracking-widest font-bold rounded-xl bg-brand-gold text-black hover:bg-brand-goldLight transition shadow-xl shadow-brand-gold/20 flex items-center justify-center gap-2">
-          <span>Get Free Consultation</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        <a href="#experience" class="w-full sm:w-auto px-8 py-3.5 text-xs uppercase tracking-widest font-bold rounded-xl bg-brand-gold text-black hover:bg-brand-goldLight transition shadow-xl shadow-brand-gold/20 flex items-center justify-center gap-2">
+          <span>Explore Live 360° Tour</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
-        <button onclick="openWhatsAppModal()" class="w-full sm:w-auto px-8 py-4 text-xs uppercase tracking-widest font-bold rounded-xl bg-brand-card border border-brand-border hover:border-brand-gold text-white transition flex items-center justify-center gap-2">
-          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
-          <span>WhatsApp Us</span>
+        <button onclick="openWhatsAppModal()" class="w-full sm:w-auto px-8 py-3.5 text-xs uppercase tracking-widest font-bold rounded-xl bg-brand-card border border-brand-border hover:border-brand-gold text-white transition">
+          Direct WhatsApp
         </button>
       </div>
 
-      <!-- CREDIBILITY TICKER (TURIYA STYLE) -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-y border-brand-border/60 py-6">
-        <div>
+      <!-- CREDIBILITY TICKER -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-brand-border pt-8 text-left sm:text-center">
+        <div class="border-l sm:border-l-0 pl-3 sm:pl-0 border-brand-gold/40">
           <div class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Pan-India</div>
-          <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Service Coverage</div>
+          <div class="text-[11px] uppercase tracking-wider text-gray-500 mt-1">Shoot Coverage</div>
         </div>
-        <div>
+        <div class="border-l sm:border-l-0 pl-3 sm:pl-0 border-brand-gold/40">
+          <div class="font-display text-2xl md:text-3xl font-bold text-brand-gold tracking-tight">HDR 360°</div>
+          <div class="text-[11px] uppercase tracking-wider text-gray-500 mt-1">Multi-Exposure Stitch</div>
+        </div>
+        <div class="border-l sm:border-l-0 pl-3 sm:pl-0 border-brand-gold/40">
+          <div class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">Street View</div>
+          <div class="text-[11px] uppercase tracking-wider text-gray-500 mt-1">Direct Map Blue Lines</div>
+        </div>
+        <div class="border-l sm:border-l-0 pl-3 sm:pl-0 border-brand-gold/40">
           <div class="font-display text-2xl md:text-3xl font-bold text-brand-gold tracking-tight">100% Policy</div>
-          <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Compliant Process</div>
-        </div>
-        <div>
-          <div class="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">HDR 360°</div>
-          <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Street View Panoramas</div>
-        </div>
-        <div>
-          <div class="font-display text-2xl md:text-3xl font-bold text-brand-gold tracking-tight">Local SEO</div>
-          <div class="text-xs uppercase tracking-wider text-gray-500 mt-1">Relevance & Prominence</div>
+          <div class="text-[11px] uppercase tracking-wider text-gray-500 mt-1">Compliant Local SEO</div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- INTERACTIVE 360 EXPERIENCE VIEWER -->
-  <section id="experience" class="py-16 bg-brand-dark/50 border-t border-brand-border/60 relative">
+  <!-- ACTUAL LIVE 360 PANORAMA VIEWER (TURIYA-STYLE INTERACTIVE SHOWCASE) -->
+  <section id="experience" class="py-16 md:py-24 bg-brand-dark border-y border-brand-border relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
         <div>
-          <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-2">Simulated Showcase</div>
-          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">Interactive 360° Walkthrough Demo</h2>
+          <span class="text-xs font-bold uppercase tracking-widest text-brand-gold">Real Spatial Experience</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-1">Interactive 360° Walkthrough Demo</h2>
         </div>
-        <p class="text-sm text-gray-400 max-w-md mt-3 md:mt-0">
-          Drag on the screen or use controls to look around. Customers explore your business interior before stepping out.
-        </p>
+        <div class="flex items-center gap-2 mt-4 md:mt-0 flex-wrap">
+          <button onclick="loadTour('showroom')" id="btn-showroom" class="scene-btn px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase bg-brand-gold text-black transition">Luxury Retail</button>
+          <button onclick="loadTour('hotel')" id="btn-hotel" class="scene-btn px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase bg-brand-card text-gray-400 border border-brand-border hover:text-white transition">Hotel Suite</button>
+          <button onclick="loadTour('architecture')" id="btn-architecture" class="scene-btn px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase bg-brand-card text-gray-400 border border-brand-border hover:text-white transition">Heritage Hall</button>
+        </div>
       </div>
 
-      <!-- TOUR CONTAINER -->
-      <div class="relative w-full h-[450px] md:h-[550px] rounded-2xl overflow-hidden border border-brand-border bg-brand-card shadow-2xl">
-        <canvas id="tourCanvas" class="w-full h-full cursor-grab active:cursor-grabbing block"></canvas>
+      <!-- PANNELLUM 360 VIEWER CONTAINER -->
+      <div class="relative w-full h-[480px] sm:h-[580px] rounded-2xl overflow-hidden border border-brand-border/80 shadow-2xl bg-black">
+        <div id="panorama" class="w-full h-full"></div>
 
-        <!-- TOP BAR HUD -->
-        <div class="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-          <div class="flex items-center gap-2 bg-brand-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-            <span id="currentRoomLabel" class="font-semibold tracking-wide">Jewellery Showroom Panorama</span>
-          </div>
-
-          <div class="pointer-events-auto flex items-center gap-2">
-            <button onclick="changeScene('showroom')" class="px-3 py-1 rounded bg-black/60 hover:bg-black/90 text-xs text-gray-300 hover:text-white border border-white/10 transition">Showroom</button>
-            <button onclick="changeScene('hotel')" class="px-3 py-1 rounded bg-black/60 hover:bg-black/90 text-xs text-gray-300 hover:text-white border border-white/10 transition">Hotel Lobby</button>
-            <button onclick="changeScene('banquet')" class="px-3 py-1 rounded bg-black/60 hover:bg-black/90 text-xs text-gray-300 hover:text-white border border-white/10 transition">Banquet Hall</button>
-          </div>
+        <!-- OVERLAY INSTRUCTIONS HUD -->
+        <div class="absolute bottom-4 left-4 z-10 bg-brand-black/85 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 text-xs text-gray-300 flex items-center gap-2 pointer-events-none">
+          <svg class="w-4 h-4 text-brand-gold animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+          <span>Drag with mouse / finger to look 360° around</span>
         </div>
+      </div>
 
-        <!-- BOTTOM CONTROLS HUD -->
-        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-          <div class="text-xs text-gray-400 bg-brand-black/80 backdrop-blur-md px-3 py-1 rounded border border-white/10">
-            Click & Drag to Rotate 360°
-          </div>
-          <div class="pointer-events-auto flex gap-2">
-            <button onclick="panScene(-30)" class="w-9 h-9 rounded-lg bg-brand-black/80 hover:bg-brand-gold text-white hover:text-black border border-white/10 flex items-center justify-center transition">◀</button>
-            <button onclick="panScene(30)" class="w-9 h-9 rounded-lg bg-brand-black/80 hover:bg-brand-gold text-white hover:text-black border border-white/10 flex items-center justify-center transition">▶</button>
-            <button onclick="resetScene()" class="px-3 h-9 rounded-lg bg-brand-black/80 hover:bg-brand-border text-xs text-white border border-white/10 transition">Reset</button>
-          </div>
-        </div>
+      <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+        <p>Photographed with bracketed multi-exposure HDR sensors and mapped with exact Google Maps coordinates.</p>
+        <span class="text-brand-gold font-medium">Equipped for Web Embed & Google Maps Street View</span>
       </div>
 
     </div>
   </section>
 
-  <!-- COMPLETE SERVICES SECTION -->
-  <section id="services" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
+  <!-- INDUSTRY PORTFOLIO GRID (VISUAL-FIRST LIKE TURIYA) -->
+  <section id="portfolio" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-2">Our Capabilities</div>
-      <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">Complete Google Presence Solutions</h2>
-      <p class="text-gray-400 text-sm sm:text-base">
-        All services adhere strictly to Google's Business Profile guidelines. We do not make false guarantees—only compliant, high-retention execution.
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-gold">Sector Deployments</span>
+      <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Tailored Spatial Visuals</h2>
+      <p class="text-gray-400 text-sm">
+        Every commercial sector has a different reason for customers to walk in. Here is how Elite360views bridges that trust gap.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       
-      <!-- A. SETUP -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-border hover:border-brand-gold/50 transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold mb-6 font-display font-bold text-lg">01</div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Google Business Profile Setup</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6">
-            Complete business profile creation with high-precision category selection, verified operational hours, geocoded service area mapping, and photo asset preparation.
-          </p>
-          <ul class="text-xs text-gray-400 space-y-2 mb-6">
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Primary & secondary categories selection</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Complete profile completeness score</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Video verification prep and guidance</li>
-          </ul>
+      <!-- SHOWROOMS -->
+      <div class="group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-gold/60 transition duration-300 flex flex-col">
+        <div class="h-56 relative overflow-hidden bg-brand-dark">
+          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80" alt="Jewellery Showroom" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute top-3 left-3 px-3 py-1 rounded bg-black/80 backdrop-blur-sm text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">Showrooms & Retail</div>
         </div>
-        <a href="#audit" class="inline-flex items-center justify-between text-xs font-semibold text-brand-gold hover:text-brand-goldLight uppercase tracking-wider pt-4 border-t border-brand-border">
-          <span>Get Profile Setup Assistance</span> <span>→</span>
-        </a>
-      </div>
-
-      <!-- B. PHONE NUMBER ASSISTANCE -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-border hover:border-brand-gold/50 transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-6 font-display font-bold text-lg">02</div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Phone Number Assistance</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6">
-            Troubleshooting missing or pending business contact numbers. We guide you through document preparation (telecom bill, signage, GST proof) for Google compliance.
-          </p>
-          <div class="p-3 rounded-lg bg-black/40 border border-white/5 text-[11px] text-gray-400 mb-6 italic">
-            *Google holds final publishing discretion. Changes are subject to automated review and verification policies.
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Jewellery & Luxury Outlets</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">
+              High-value buyers demand confidence in store scale, security, and exclusive VIP lounge spaces before traveling across city traffic.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <span class="text-[11px] text-gray-500">Street View + Counter 360</span>
+            <a href="#audit" class="text-xs font-bold text-brand-gold hover:underline">Book Showcase →</a>
           </div>
         </div>
-        <a href="#audit" class="inline-flex items-center justify-between text-xs font-semibold text-brand-gold hover:text-brand-goldLight uppercase tracking-wider pt-4 border-t border-brand-border">
-          <span>Discuss My Phone Issue</span> <span>→</span>
-        </a>
       </div>
 
-      <!-- C. LOCAL SEO -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-border hover:border-brand-gold/50 transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 font-display font-bold text-lg">03</div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Google Maps & Local SEO</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6">
-            Optimization based on Google's core ranking algorithm: Relevance, Distance, and Prominence. We align products, services, website schema, and local signals.
-          </p>
-          <ul class="text-xs text-gray-400 space-y-2 mb-6">
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Local keyword & competitor analysis</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Products & services catalog optimization</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Website-to-Profile NAP consistency</li>
-          </ul>
+      <!-- HOTELS & RESORTS -->
+      <div class="group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-gold/60 transition duration-300 flex flex-col">
+        <div class="h-56 relative overflow-hidden bg-brand-dark">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Hotels & Resorts" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute top-3 left-3 px-3 py-1 rounded bg-black/80 backdrop-blur-sm text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">Hospitality</div>
         </div>
-        <a href="#audit" class="inline-flex items-center justify-between text-xs font-semibold text-brand-gold hover:text-brand-goldLight uppercase tracking-wider pt-4 border-t border-brand-border">
-          <span>Request a Profile Audit</span> <span>→</span>
-        </a>
-      </div>
-
-      <!-- D. 360 VIRTUAL TOURS -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-gold/40 shadow-xl shadow-brand-gold/5 flex flex-col justify-between relative overflow-hidden">
-        <div class="absolute top-0 right-0 bg-brand-gold text-black text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded-bl-lg">Flagship</div>
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-brand-gold/20 border border-brand-gold flex items-center justify-center text-brand-gold mb-6 font-display font-bold text-lg">04</div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Google Street View 360° Tours</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6">
-            Ultra-sharp, high dynamic range panoramic photography connected directly into Google Maps Street View. Suitable for showrooms, banquet halls, hotels, and clinics.
-          </p>
-          <ul class="text-xs text-gray-400 space-y-2 mb-6">
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Street View blue line connectivity</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Branded tripod nadir patch integration</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Custom website embed code provided</li>
-          </ul>
-        </div>
-        <a href="#audit" class="inline-flex items-center justify-between text-xs font-semibold text-brand-gold hover:text-brand-goldLight uppercase tracking-wider pt-4 border-t border-brand-border">
-          <span>Book a 360° Virtual Tour</span> <span>→</span>
-        </a>
-      </div>
-
-      <!-- E. REVIEW STANDEE -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-border hover:border-brand-gold/50 transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-6 font-display font-bold text-lg">05</div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Google Review Standee & QR</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6">
-            Physical, high-quality counter standees equipped with verified direct review links and QR technology so customers can easily write genuine feedback.
-          </p>
-          <div class="p-3 rounded-lg bg-black/40 border border-white/5 text-[11px] text-gray-400 mb-6">
-            <strong class="text-gray-300 font-semibold">Strict Anti-Gating Policy:</strong> Customers write their own genuine feedback. No fake or incentivized reviews.
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Hotels, Resorts & Banquets</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">
+              Eliminate booking hesitation. Guests walk through suites, reception, conference halls, and dining facilities directly on Google Maps.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <span class="text-[11px] text-gray-500">Full Property Walkthrough</span>
+            <a href="#audit" class="text-xs font-bold text-brand-gold hover:underline">Book Showcase →</a>
           </div>
         </div>
-        <a href="#audit" class="inline-flex items-center justify-between text-xs font-semibold text-brand-gold hover:text-brand-goldLight uppercase tracking-wider pt-4 border-t border-brand-border">
-          <span>Get a Review Standee</span> <span>→</span>
-        </a>
       </div>
 
-      <!-- F. ONGOING MANAGEMENT -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-border hover:border-brand-gold/50 transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 mb-6 font-display font-bold text-lg">06</div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Profile Audit & Ongoing Care</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6">
-            Periodic health audits, duplicate listing detection, suspension & reverification support, holiday timing schedules, and product catalog maintenance.
-          </p>
-          <ul class="text-xs text-gray-400 space-y-2 mb-6">
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Duplicate listing suppression checks</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Video verification preparation</li>
-            <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> Review reply etiquette guidance</li>
-          </ul>
+      <!-- RESTAURANTS & CAFES -->
+      <div class="group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-gold/60 transition duration-300 flex flex-col">
+        <div class="h-56 relative overflow-hidden bg-brand-dark">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Restaurants" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute top-3 left-3 px-3 py-1 rounded bg-black/80 backdrop-blur-sm text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">Dining & Nightlife</div>
         </div>
-        <a href="#audit" class="inline-flex items-center justify-between text-xs font-semibold text-brand-gold hover:text-brand-goldLight uppercase tracking-wider pt-4 border-t border-brand-border">
-          <span>Schedule Profile Care</span> <span>→</span>
-        </a>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Cafes, Fine Dining & Dhabas</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">
+              Showcase ambient lighting, private seating zones, family dining areas, and live kitchen hygiene to capture evening walk-ins.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <span class="text-[11px] text-gray-500">Ambiance + Menu Sync</span>
+            <a href="#audit" class="text-xs font-bold text-brand-gold hover:underline">Book Showcase →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLINICS & HEALTHCARE -->
+      <div class="group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-gold/60 transition duration-300 flex flex-col">
+        <div class="h-56 relative overflow-hidden bg-brand-dark">
+          <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80" alt="Clinics" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute top-3 left-3 px-3 py-1 rounded bg-black/80 backdrop-blur-sm text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">Healthcare</div>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Clinics, Dentists & Diagnostics</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">
+              Patients inspect clinical sterility, advanced diagnostic machines, and waiting lounge comfort before scheduling consultations.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <span class="text-[11px] text-gray-500">Operatory & Clinic Tours</span>
+            <a href="#audit" class="text-xs font-bold text-brand-gold hover:underline">Book Showcase →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARBLE & SANITARY SHOWROOMS -->
+      <div class="group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-gold/60 transition duration-300 flex flex-col">
+        <div class="h-56 relative overflow-hidden bg-brand-dark">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Marble & Tiles" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute top-3 left-3 px-3 py-1 rounded bg-black/80 backdrop-blur-sm text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">Architecture & Decor</div>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Marble, Tiles & Sanitaryware</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">
+              Massive multi-aisle displays made accessible remotely for architects, builders, and interior designers browsing slab finishes.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <span class="text-[11px] text-gray-500">Wide-Aisle Connected 360</span>
+            <a href="#audit" class="text-xs font-bold text-brand-gold hover:underline">Book Showcase →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FITNESS & GYMS -->
+      <div class="group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-gold/60 transition duration-300 flex flex-col">
+        <div class="h-56 relative overflow-hidden bg-brand-dark">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="Gyms" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 group-hover:opacity-100">
+          <div class="absolute top-3 left-3 px-3 py-1 rounded bg-black/80 backdrop-blur-sm text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">Fitness & Sports</div>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Gyms, Crossfit & Studios</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">
+              Members want to see equipment quality, weight sections, cardio ranges, and locker hygiene before paying annual memberships.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+            <span class="text-[11px] text-gray-500">Equipment & Floor Walkthrough</span>
+            <a href="#audit" class="text-xs font-bold text-brand-gold hover:underline">Book Showcase →</a>
+          </div>
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- INDUSTRY SOLUTIONS (TURIYA-STYLE MATRIX) -->
-  <section id="solutions" class="py-24 bg-brand-dark/70 border-y border-brand-border/60">
+  <!-- CORE CAPABILITIES (SERVICES OVERVIEW) -->
+  <section id="services" class="py-20 bg-brand-dark border-t border-brand-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="max-w-3xl mb-12">
-        <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-2">Tailored Deployments</div>
-        <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">Industry Solutions</h2>
-        <p class="text-gray-400 text-sm sm:text-base">
-          Every space has unique customer decision triggers. We do not use cookie-cutter plans; we deploy exactly what your industry demands.
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-gold">Our Expertise</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-1">Google Maps Ecosystem Services</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center font-bold text-sm mb-4">01</div>
+          <h3 class="font-display text-lg font-bold text-white mb-2">GBP Setup & Category Engineering</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Precise primary and secondary category assignments, holiday hour definitions, geocoded service area mapping, and video verification preparation.
+          </p>
+          <span class="text-[11px] text-brand-gold">Guidance based on Google Guidelines</span>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-sm mb-4">02</div>
+          <h3 class="font-display text-lg font-bold text-white mb-2">Phone Number Troubleshooting</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Assistance for eligible businesses facing pending, crossed-out, or hidden business telephone numbers by aligning utility records and signage proofs.
+          </p>
+          <span class="text-[11px] text-gray-500">*Google holds final editorial review</span>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-sm mb-4">03</div>
+          <h3 class="font-display text-lg font-bold text-white mb-2">Local SEO (Relevance & Prominence)</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Optimizing service catalogs, profile metadata, website NAP synchronization, and regular update plans to help Google match your profile with nearby queries.
+          </p>
+          <span class="text-[11px] text-emerald-400">Organic Visibility Focus</span>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-gold/40">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-sm mb-4">04</div>
+          <h3 class="font-display text-lg font-bold text-white mb-2">Street View 360° Photography</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Professional tripod-mounted 360° capture, nadir floor patch with your branding, constellation link creation, and direct Google Maps Street View publishing.
+          </p>
+          <span class="text-[11px] text-brand-gold">Flagship Interactive Service</span>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-sm mb-4">05</div>
+          <h3 class="font-display text-lg font-bold text-white mb-2">Review Standee & QR Solutions</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Physical branded counter displays with verified direct review links. Allows real customers to leave transparent feedback easily. Strictly anti-gating.
+          </p>
+          <span class="text-[11px] text-gray-500">100% Google Policy Compliant</span>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+          <div class="w-10 h-10 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-sm mb-4">06</div>
+          <h3 class="font-display text-lg font-bold text-white mb-2">Audit & Profile Health Care</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Routine checks for duplicate listings, incorrect user-suggested edits, holiday hours synchronization, and guidance on suspension appeals.
+          </p>
+          <span class="text-[11px] text-gray-500">Continuous Profile Safety</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section id="faq" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-gold">Transparency</span>
+      <h2 class="font-display text-3xl font-bold text-white mt-1">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="space-y-4">
+      <div class="border border-brand-border rounded-xl bg-brand-card p-5">
+        <h4 class="text-sm font-bold text-white mb-2">Do 360° virtual tours guarantee #1 ranking on Google Maps?</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          No agency can guarantee ranking positions. Google Maps rankings depend on Relevance, Distance, and Prominence. However, a 360° virtual tour significantly increases listing engagement, time-on-profile, and customer trust.
         </p>
       </div>
 
-      <!-- FILTER TABS -->
-      <div class="flex flex-wrap gap-2 mb-10">
-        <button onclick="filterIndustry('all')" class="industry-tab active px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-gold text-black transition" data-target="all">All Industries</button>
-        <button onclick="filterIndustry('group1')" class="industry-tab px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-card text-gray-400 hover:text-white border border-brand-border transition" data-target="group1">Retail & Customer-Facing</button>
-        <button onclick="filterIndustry('group2')" class="industry-tab px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-card text-gray-400 hover:text-white border border-brand-border transition" data-target="group2">Specialized & Venues</button>
-        <button onclick="filterIndustry('group3')" class="industry-tab px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-card text-gray-400 hover:text-white border border-brand-border transition" data-target="group3">Healthcare & Corporate</button>
+      <div class="border border-brand-border rounded-xl bg-brand-card p-5">
+        <h4 class="text-sm font-bold text-white mb-2">Can you fix my missing or unverified phone number?</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          We help prepare documentation (telecom bills, signage, business certificates) and submit appeals according to Google's strict guidelines. Final display decisions rest with Google's automated review system.
+        </p>
       </div>
 
-      <!-- INDUSTRY GRID -->
-      <div id="industryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- CARD 1 -->
-        <div class="industry-card group1 bg-brand-card border border-brand-border rounded-xl p-6 hover:border-brand-gold/40 transition">
-          <div class="text-xs font-semibold text-brand-gold mb-1">Group 1 • High Footfall</div>
-          <h4 class="font-display text-lg font-bold text-white mb-2">Restaurants, Cafes & Dhabas</h4>
-          <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-            <strong class="text-gray-300">Challenge:</strong> High competition on Google Maps; guests want to verify seating hygiene, ambiance, and family areas before booking.
-          </p>
-          <div class="text-[11px] text-gray-400 mb-4 bg-black/30 p-2.5 rounded border border-white/5">
-            <strong>Recommended:</strong> 360° Ambiance Tour + Menu Catalog Setup + Review Standees on tables.
-          </div>
-          <a href="#audit" class="text-xs text-brand-gold hover:underline font-semibold flex items-center justify-between">
-            <span>Improve My Restaurant's Presence</span> <span>→</span>
-          </a>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="industry-card group1 bg-brand-card border border-brand-border rounded-xl p-6 hover:border-brand-gold/40 transition">
-          <div class="text-xs font-semibold text-brand-gold mb-1">Group 1 • Premium Experience</div>
-          <h4 class="font-display text-lg font-bold text-white mb-2">Jewellery & Luxury Showrooms</h4>
-          <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-            <strong class="text-gray-300">Challenge:</strong> Buyers hesitate to visit without confidence in showroom scale, security, and private lounge amenities.
-          </p>
-          <div class="text-[11px] text-gray-400 mb-4 bg-black/30 p-2.5 rounded border border-white/5">
-            <strong>Recommended:</strong> High-Resolution 360° Counter Tour + Verified Phone Number + Local SEO.
-          </div>
-          <a href="#audit" class="text-xs text-brand-gold hover:underline font-semibold flex items-center justify-between">
-            <span>Get a Virtual Tour for My Showroom</span> <span>→</span>
-          </a>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="industry-card group1 bg-brand-card border border-brand-border rounded-xl p-6 hover:border-brand-gold/40 transition">
-          <div class="text-xs font-semibold text-brand-gold mb-1">Group 1 • Hospitality</div>
-          <h4 class="font-display text-lg font-bold text-white mb-2">Hotels, Resorts & Guest Houses</h4>
-          <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-            <strong class="text-gray-300">Challenge:</strong> Online travelers bypass generic photos fearing misleading representations of rooms and bathrooms.
-          </p>
-          <div class="text-[11px] text-gray-400 mb-4 bg-black/30 p-2.5 rounded border border-white/5">
-            <strong>Recommended:</strong> Street View Connectivity from Gate to Deluxe Room + Direct Booking Links.
-          </div>
-          <a href="#audit" class="text-xs text-brand-gold hover:underline font-semibold flex items-center justify-between">
-            <span>Elevate Hotel Bookings</span> <span>→</span>
-          </a>
-        </div>
-
-        <!-- CARD 4 -->
-        <div class="industry-card group2 bg-brand-card border border-brand-border rounded-xl p-6 hover:border-brand-gold/40 transition">
-          <div class="text-xs font-semibold text-brand-gold mb-1">Group 2 • Event Venues</div>
-          <h4 class="font-display text-lg font-bold text-white mb-2">Banquet Halls & Wedding Lawns</h4>
-          <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-            <strong class="text-gray-300">Challenge:</strong> Families struggle to coordinate multiple physical visits to evaluate stage size, lighting, and guest capacity.
-          </p>
-          <div class="text-[11px] text-gray-400 mb-4 bg-black/30 p-2.5 rounded border border-white/5">
-            <strong>Recommended:</strong> Full Connected Walkthrough (Entrance, Lawn, Stage, Bridal Rooms).
-          </div>
-          <a href="#audit" class="text-xs text-brand-gold hover:underline font-semibold flex items-center justify-between">
-            <span>Showcase My Venue in 360°</span> <span>→</span>
-          </a>
-        </div>
-
-        <!-- CARD 5 -->
-        <div class="industry-card group2 bg-brand-card border border-brand-border rounded-xl p-6 hover:border-brand-gold/40 transition">
-          <div class="text-xs font-semibold text-brand-gold mb-1">Group 2 • Material & Interior</div>
-          <h4 class="font-display text-lg font-bold text-white mb-2">Marble, Tiles & Sanitary Showrooms</h4>
-          <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-            <strong class="text-gray-300">Challenge:</strong> Massive physical displays are hard to represent in 2D photos; builders & architects want to see slab collections.
-          </p>
-          <div class="text-[11px] text-gray-400 mb-4 bg-black/30 p-2.5 rounded border border-white/5">
-            <strong>Recommended:</strong> Wide-Angle Multi-Aisle 360° Walkthrough + Website Embeds.
-          </div>
-          <a href="#audit" class="text-xs text-brand-gold hover:underline font-semibold flex items-center justify-between">
-            <span>Digitize My Showroom</span> <span>→</span>
-          </a>
-        </div>
-
-        <!-- CARD 6 -->
-        <div class="industry-card group3 bg-brand-card border border-brand-border rounded-xl p-6 hover:border-brand-gold/40 transition">
-          <div class="text-xs font-semibold text-brand-gold mb-1">Group 3 • Healthcare</div>
-          <h4 class="font-display text-lg font-bold text-white mb-2">Clinics, Dentists & Diagnostics</h4>
-          <p class="text-xs text-gray-400 mb-4 leading-relaxed">
-            <strong class="text-gray-300">Challenge:</strong> Patients demand strict reassurance on sanitization, diagnostic technology, and waiting lounge comfort.
-          </p>
-          <div class="text-[11px] text-gray-400 mb-4 bg-black/30 p-2.5 rounded border border-white/5">
-            <strong>Recommended:</strong> Consultation & Operatory Room 360° View + Doctor Timing Setup.
-          </div>
-          <a href="#audit" class="text-xs text-brand-gold hover:underline font-semibold flex items-center justify-between">
-            <span>Build Clinic Credibility</span> <span>→</span>
-          </a>
-        </div>
-
+      <div class="border border-brand-border rounded-xl bg-brand-card p-5">
+        <h4 class="text-sm font-bold text-white mb-2">Can I embed the 360° tour on my personal website?</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Yes! We provide complete iframe embed codes that work effortlessly on WordPress, custom HTML, React, or Shopify websites.
+        </p>
       </div>
 
+      <div class="border border-brand-border rounded-xl bg-brand-card p-5">
+        <h4 class="text-sm font-bold text-white mb-2">Do you provide shoots outside Delhi NCR?</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Yes, Elite360views operates across all Indian states and metro areas depending on project scale and scheduling.
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- COMPARISON (WHY 360 MATTERS) -->
-  <section id="comparison" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-2">Measurable Advantage</div>
-      <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">Why Your Business Needs a Strong Google Presence</h2>
-      <p class="text-gray-400 text-sm sm:text-base">
-        A complete profile is the bridge between a customer's online search and their physical visit.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <!-- CONSULTATION & LEAD FORM -->
+  <section id="audit" class="py-20 bg-brand-dark border-t border-brand-border">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- WITHOUT -->
-      <div class="bg-brand-card/40 rounded-2xl p-8 border border-white/5 relative">
-        <div class="inline-block px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs font-bold uppercase tracking-wider mb-6">Without Verified 360 Presence</div>
-        <ul class="space-y-4 text-sm text-gray-400">
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✕</span>
-            <span>Customers cannot preview layout or scale, leading to hesitation and choosing competitors.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✕</span>
-            <span>Missing or unverified phone numbers result in lost call inquiries every single week.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✕</span>
-            <span>Outdated business hours cause customers to arrive at closed doors, generating negative reviews.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-red-400 font-bold">✕</span>
-            <span>No convenient way for in-store satisfied patrons to post authentic feedback on Google.</span>
-          </li>
-        </ul>
-      </div>
+      <div class="bg-brand-card border border-brand-border rounded-3xl p-8 sm:p-12 shadow-2xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brand-gold">Direct Project Enquiry</span>
+            <h2 class="font-display text-3xl font-bold text-white mt-1 mb-4">Book a Shoot or Request Profile Audit</h2>
+            <p class="text-xs text-gray-400 leading-relaxed mb-6">
+              Share your business details. We analyze your listing and provide an honest, actionable plan without false marketing promises.
+            </p>
 
-      <!-- WITH ELITE360VIEWS -->
-      <div class="bg-brand-card rounded-2xl p-8 border border-brand-gold/40 shadow-xl shadow-brand-gold/5 relative">
-        <div class="inline-block px-3 py-1 rounded bg-brand-gold/10 text-brand-gold text-xs font-bold uppercase tracking-wider mb-6">With Elite360views Setup</div>
-        <ul class="space-y-4 text-sm text-gray-300">
-          <li class="flex items-start gap-3">
-            <span class="text-brand-gold font-bold">✓</span>
-            <span>High-definition 360° Street View walkthrough provides total transparency and builds trust before visit.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-brand-gold font-bold">✓</span>
-            <span>Compliant phone number and category placement align your business with Google's relevance criteria.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-brand-gold font-bold">✓</span>
-            <span>Verified holiday hours, menus, product lists, and clear driving directions eliminate customer friction.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-brand-gold font-bold">✓</span>
-            <span>Custom-branded QR review standees make it seamless for real customers to access the official review box.</span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FAQ ACCORDION -->
-  <section id="faq" class="py-24 bg-brand-dark/50 border-t border-brand-border/60">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center mb-12">
-        <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-2">Clarity & Transparency</div>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">Frequently Asked Questions</h2>
-        <p class="text-gray-400 text-sm">Clear, honest answers about Google guidelines, 360 tours, and verification.</p>
-      </div>
-
-      <div class="space-y-4" id="faqContainer">
-        
-        <!-- Q1 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>What is a Google Business Profile?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            Google Business Profile is Google's free listing platform for eligible businesses. It manages how your business details, photos, hours, reviews, and address appear across Google Search and Google Maps.
-          </div>
-        </div>
-
-        <!-- Q2 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>Can you fix a phone number that is not showing on Google?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            Yes, we assist eligible businesses with phone number troubleshooting, guideline compliance, and evidence submission. However, final display and approval rest entirely with Google's automated verification systems.
-          </div>
-        </div>
-
-        <!-- Q3 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>Do you guarantee a #1 ranking on Google Maps?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            No honest agency can guarantee a specific ranking position. Google Maps rankings depend on Relevance, Distance, and Prominence. We optimize all factors under your control to make your profile as competitive as possible.
-          </div>
-        </div>
-
-        <!-- Q4 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>What equipment is used for 360° virtual tours?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            We utilize high-resolution dual-lens 360° panoramic cameras (including the Insta360 series) with HDR bracketed exposure, leveled monopods, and nadir floor patching to eliminate tripod visibility.
-          </div>
-        </div>
-
-        <!-- Q5 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>Can I embed the 360° virtual tour onto my own website?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            Yes. We provide clean HTML iframe embed codes so your visitors can walk through your facility directly on your website, whether hosted on WordPress, custom code, or Shopify.
-          </div>
-        </div>
-
-        <!-- Q6 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>Does your Review QR Standee write automated or fake reviews?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            Never. Our QR standees simply open your genuine, official Google Review page on the customer's phone. Customers must independently write and submit their genuine rating, in full compliance with Google anti-gating policies.
-          </div>
-        </div>
-
-        <!-- Q7 -->
-        <div class="border border-brand-border rounded-xl bg-brand-card overflow-hidden">
-          <button onclick="toggleFaq(this)" class="w-full text-left p-5 flex items-center justify-between text-sm font-semibold text-white hover:text-brand-gold transition">
-            <span>Do you operate outside Delhi NCR?</span>
-            <span class="text-lg ml-2 text-brand-gold">+</span>
-          </button>
-          <div class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-brand-border/40 pt-3">
-            Yes! Elite360views serves commercial clients across all major states and cities in India, subject to project scope and scheduling.
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- LEAD GENERATION & CONTACT FORM -->
-  <section id="audit" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-brand-card border border-brand-border rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-2xl">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        <div>
-          <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-2">Direct Consultation</div>
-          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">Request a Profile Audit or 360° Shoot</h2>
-          <p class="text-gray-400 text-sm leading-relaxed mb-8">
-            Tell us about your business. We will review your current Google visibility and suggest a compliant, high-impact roadmap.
-          </p>
-
-          <div class="space-y-4 text-sm mb-8">
-            <div class="flex items-center gap-3 text-gray-300">
-              <span class="w-8 h-8 rounded-lg bg-brand-dark border border-brand-border flex items-center justify-center text-brand-gold">📞</span>
-              <div>
-                <span class="block text-xs text-gray-500">Call / WhatsApp:</span>
-                <span class="font-semibold">+91 85274 08464 &nbsp;|&nbsp; +91 83768 78717</span>
+            <div class="space-y-3 text-xs text-gray-300 mb-8">
+              <div class="flex items-center gap-3">
+                <span class="text-brand-gold">📞</span>
+                <span>+91 85274 08464 &nbsp;|&nbsp; +91 83768 78717</span>
               </div>
-            </div>
-
-            <div class="flex items-center gap-3 text-gray-300">
-              <span class="w-8 h-8 rounded-lg bg-brand-dark border border-brand-border flex items-center justify-center text-brand-gold">✉️</span>
-              <div>
-                <span class="block text-xs text-gray-500">Official Email:</span>
-                <span class="font-semibold">elite360views@gmaiil.com</span>
+              <div class="flex items-center gap-3">
+                <span class="text-brand-gold">✉️</span>
+                <span>elite360views@gmaiil.com</span>
               </div>
-            </div>
-
-            <div class="flex items-center gap-3 text-gray-300">
-              <span class="w-8 h-8 rounded-lg bg-brand-dark border border-brand-border flex items-center justify-center text-brand-gold">📸</span>
-              <div>
-                <span class="block text-xs text-gray-500">Instagram:</span>
-                <a href="https://www.instagram.com/elite360views/" target="_blank" class="font-semibold text-brand-gold hover:underline">@elite360views</a>
+              <div class="flex items-center gap-3">
+                <span class="text-brand-gold">📸</span>
+                <a href="https://www.instagram.com/elite360views/" target="_blank" class="text-brand-gold hover:underline">@elite360views</a>
               </div>
             </div>
           </div>
 
-          <div class="p-4 rounded-xl bg-brand-dark/80 border border-white/5 text-xs text-gray-400">
-            ⚡ Quick WhatsApp Dispatch available directly upon form completion.
-          </div>
-        </div>
-
-        <!-- FORM -->
-        <div class="bg-brand-dark p-6 sm:p-8 rounded-2xl border border-brand-border/80">
-          <form id="leadForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-medium text-gray-400 mb-1">Your Name *</label>
-                <input type="text" id="formName" required placeholder="Aman Sharma" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold">
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-gray-400 mb-1">Business Name *</label>
-                <input type="text" id="formBiz" required placeholder="Luxury Diamond Studio" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-medium text-gray-400 mb-1">Phone Number (WhatsApp) *</label>
-                <input type="tel" id="formPhone" required placeholder="98765 43210" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold">
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-gray-400 mb-1">City & State *</label>
-                <input type="text" id="formCity" required placeholder="Delhi, NCR" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold">
-              </div>
-            </div>
-
+          <form onsubmit="handleFormSubmit(event)" class="space-y-3.5 bg-brand-black/50 p-6 rounded-2xl border border-brand-border">
             <div>
-              <label class="block text-xs font-medium text-gray-400 mb-1">Required Service *</label>
-              <select id="formService" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-                <option value="Google Street View 360 Tour">Google Street View 360° Virtual Tour</option>
-                <option value="Google Business Profile Setup">Google Business Profile Setup & Verification</option>
-                <option value="Phone Number Issue Assistance">Phone Number Issue Assistance</option>
-                <option value="Local SEO & Maps Optimization">Local SEO & Maps Profile Optimization</option>
-                <option value="Review Standee & QR Solutions">Review Standee & QR Solutions</option>
-                <option value="Complete Audit & Management">I am not sure — Recommend a Service</option>
+              <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Your Name *</label>
+              <input type="text" id="formName" required placeholder="Aman Sharma" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Business Name *</label>
+              <input type="text" id="formBiz" required placeholder="Elite Jewellery Showroom" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">WhatsApp Number *</label>
+                <input type="tel" id="formPhone" required placeholder="85274 08464" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">City *</label>
+                <input type="text" id="formCity" required placeholder="Delhi NCR" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Service Required *</label>
+              <select id="formService" class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+                <option>360° Virtual Tour (Google Street View)</option>
+                <option>Google Business Profile Setup & Verification</option>
+                <option>Phone Number Issue Troubleshooting</option>
+                <option>Google Maps Local SEO Optimization</option>
+                <option>Branded Review Standee & QR Setup</option>
               </select>
             </div>
-
-            <div>
-              <label class="block text-xs font-medium text-gray-400 mb-1">Current Google Maps Link (Optional)</label>
-              <input type="url" id="formMapLink" placeholder="https://maps.app.goo.gl/..." class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold">
-            </div>
-
-            <div>
-              <label class="block text-xs font-medium text-gray-400 mb-1">Brief Details / Requirements</label>
-              <textarea id="formMessage" rows="2" placeholder="Approx square footage, number of rooms, or specific issue..." class="w-full bg-brand-card border border-brand-border rounded-lg px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold"></textarea>
-            </div>
-
-            <button type="submit" class="w-full py-3.5 rounded-lg bg-brand-gold text-black text-xs font-bold uppercase tracking-widest hover:bg-brand-goldLight transition shadow-lg shadow-brand-gold/20">
-              Submit & Connect on WhatsApp
+            <button type="submit" class="w-full py-3 rounded-xl bg-brand-gold text-black font-bold text-xs uppercase tracking-widest hover:bg-brand-goldLight transition shadow-lg shadow-brand-gold/20">
+              Submit & Send to WhatsApp
             </button>
           </form>
-        </div>
 
+        </div>
       </div>
 
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-brand-dark border-t border-brand-border/60 py-12 text-xs text-gray-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-2">
-        <span class="font-display font-bold text-white text-sm">ELITE<span class="text-brand-gold">360</span>VIEWS</span>
-        <span>— All Over India Business Visibility Partner</span>
-      </div>
-      <div>
-        Disclaimer: Elite360views is an independent digital media service. Google, Google Maps, and Street View are registered trademarks of Google LLC.
-      </div>
-      <div>
-        © 2026 Elite360views. All rights reserved.
+  <footer class="bg-brand-black border-t border-brand-border py-8 text-xs text-gray-500 text-center">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>© 2026 Elite360views. Independent Google Street View Photography Agency.</div>
+      <div class="flex gap-4">
+        <a href="https://www.instagram.com/elite360views/" target="_blank" class="hover:text-brand-gold">Instagram</a>
+        <a href="tel:+918527408464" class="hover:text-brand-gold">Support Line 1</a>
+        <a href="tel:+918376878717" class="hover:text-brand-gold">Support Line 2</a>
       </div>
     </div>
   </footer>
 
   <!-- STICKY MOBILE BOTTOM BAR -->
-  <div class="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-brand-dark/95 backdrop-blur-lg border-t border-brand-border px-4 py-2.5 flex items-center justify-between gap-3 shadow-2xl">
-    <a href="tel:+918527408464" class="flex-1 py-2.5 text-center rounded-lg bg-brand-card border border-brand-border text-white text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5">
-      <span>📞 Call</span>
+  <div class="fixed bottom-0 left-0 right-0 z-30 sm:hidden bg-brand-dark/95 backdrop-blur-md border-t border-brand-border px-3 py-2 flex items-center justify-between gap-2">
+    <a href="tel:+918527408464" class="flex-1 py-2 text-center rounded-lg bg-brand-card border border-brand-border text-white text-[11px] font-bold uppercase tracking-wider">
+      📞 Call
     </a>
-    <button onclick="openWhatsAppModal()" class="flex-1 py-2.5 text-center rounded-lg bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5">
-      <span>💬 WhatsApp</span>
+    <button onclick="openWhatsAppModal()" class="flex-1 py-2 text-center rounded-lg bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider">
+      💬 WhatsApp
     </button>
-    <a href="#audit" class="flex-1 py-2.5 text-center rounded-lg bg-brand-gold text-black text-[11px] font-bold uppercase tracking-wider">
-      <span>Audit</span>
+    <a href="#audit" class="flex-1 py-2 text-center rounded-lg bg-brand-gold text-black text-[11px] font-bold uppercase tracking-wider">
+      Audit
     </a>
   </div>
 
-  <!-- WHATSAPP NUMBER SELECTOR MODAL -->
+  <!-- WHATSAPP SELECTOR MODAL -->
   <div id="waModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-brand-card border border-brand-border rounded-2xl max-w-sm w-full p-6 relative">
-      <button onclick="closeWhatsAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">✕</button>
-      <div class="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-1">Direct Chat</div>
-      <h3 class="font-display text-lg font-bold text-white mb-2">Select WhatsApp Number</h3>
-      <p class="text-xs text-gray-400 mb-6">Connect directly with our team for quick support:</p>
+      <button onclick="closeWhatsAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-base">✕</button>
+      <div class="text-[10px] uppercase tracking-widest font-bold text-brand-gold mb-1">Direct Chat</div>
+      <h3 class="font-display text-lg font-bold text-white mb-4">Select WhatsApp Contact</h3>
 
       <div class="space-y-3">
-        <a href="https://wa.me/918527408464?text=Hi%20Elite360views,%20I%20am%20interested%20in%20Google%20Business%20Profile%20and%20360%20Virtual%20Tour%20services." target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-brand-dark border border-brand-border hover:border-brand-gold transition group">
+        <a href="https://wa.me/918527408464?text=Hi%20Elite360views,%20I%20am%20interested%20in%20360%20Virtual%20Tour%20and%20Google%20Business%20Profile%20services." target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-brand-dark border border-brand-border hover:border-brand-gold transition">
           <div>
-            <div class="text-xs font-semibold text-white group-hover:text-brand-gold">Support Line 1</div>
-            <div class="text-[11px] text-gray-400">+91 85274 08464</div>
+            <div class="text-xs font-semibold text-white">Line 1: 85274 08464</div>
+            <div class="text-[10px] text-gray-400">Delhi NCR & Pan-India Desk</div>
           </div>
-          <span class="text-emerald-400 text-sm">Chat ➔</span>
+          <span class="text-emerald-400 text-xs font-bold">Chat ➔</span>
         </a>
 
-        <a href="https://wa.me/918376878717?text=Hi%20Elite360views,%20I%20am%20interested%20in%20Google%20Business%20Profile%20and%20360%20Virtual%20Tour%20services." target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-brand-dark border border-brand-border hover:border-brand-gold transition group">
+        <a href="https://wa.me/918376878717?text=Hi%20Elite360views,%20I%20am%20interested%20in%20360%20Virtual%20Tour%20and%20Google%20Business%20Profile%20services." target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-brand-dark border border-brand-border hover:border-brand-gold transition">
           <div>
-            <div class="text-xs font-semibold text-white group-hover:text-brand-gold">Support Line 2</div>
-            <div class="text-[11px] text-gray-400">+91 83768 78717</div>
+            <div class="text-xs font-semibold text-white">Line 2: 83768 78717</div>
+            <div class="text-[10px] text-gray-400">Direct Support & Audits</div>
           </div>
-          <span class="text-emerald-400 text-sm">Chat ➔</span>
+          <span class="text-emerald-400 text-xs font-bold">Chat ➔</span>
         </a>
       </div>
     </div>
   </div>
 
-  <!-- SCRIPT LOGIC -->
+  <!-- PANNELLUM REAL 360 PANORAMA LOGIC -->
   <script>
-    // MOBILE NAV DRAWER
-    function toggleMobileNav() {
-      const drawer = document.getElementById('mobileDrawer');
-      drawer.classList.toggle('hidden');
-    }
+    let viewer = null;
 
-    // WHATSAPP MODAL
-    function openWhatsAppModal() {
-      document.getElementById('waModal').classList.remove('hidden');
-    }
-    function closeWhatsAppModal() {
-      document.getElementById('waModal').classList.add('hidden');
-    }
+    const tours = {
+      showroom: "https://pannellum.org/images/alma.jpg",
+      hotel: "https://pannellum.org/images/bma-0.jpg",
+      architecture: "https://pannellum.org/images/cerro-toco-0.jpg"
+    };
 
-    // FAQ ACCORDION
-    function toggleFaq(btn) {
-      const content = btn.nextElementSibling;
-      const icon = btn.querySelector('span:last-child');
-      const isHidden = content.classList.contains('hidden');
-
-      document.querySelectorAll('#faqContainer > div > div').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('#faqContainer button span:last-child').forEach(el => el.innerText = '+');
-
-      if (isHidden) {
-        content.classList.remove('hidden');
-        icon.innerText = '−';
+    function initPannellum(url) {
+      if (viewer) {
+        viewer.destroy();
       }
-    }
-
-    // INDUSTRY TAB FILTER
-    function filterIndustry(category) {
-      document.querySelectorAll('.industry-tab').forEach(t => {
-        t.classList.remove('bg-brand-gold', 'text-black');
-        t.classList.add('bg-brand-card', 'text-gray-400');
-      });
-      event.target.classList.add('bg-brand-gold', 'text-black');
-      event.target.classList.remove('bg-brand-card', 'text-gray-400');
-
-      const cards = document.querySelectorAll('.industry-card');
-      cards.forEach(card => {
-        if (category === 'all' || card.classList.contains(category)) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
+      viewer = pannellum.viewer('panorama', {
+        type: 'equirectangular',
+        panorama: url,
+        autoLoad: true,
+        autoRotate: -2,
+        compass: false,
+        showZoomCtrl: true,
+        showFullscreenCtrl: true,
+        mouseZoom: false
       });
     }
 
-    // FORM HANDLING -> WHATSAPP
+    function loadTour(type) {
+      document.querySelectorAll('.scene-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-gold', 'text-black');
+        btn.classList.add('bg-brand-card', 'text-gray-400');
+      });
+      document.getElementById('btn-' + type).classList.add('bg-brand-gold', 'text-black');
+      document.getElementById('btn-' + type).classList.remove('bg-brand-card', 'text-gray-400');
+
+      initPannellum(tours[type]);
+    }
+
+    // Modal
+    function openWhatsAppModal() { document.getElementById('waModal').classList.remove('hidden'); }
+    function closeWhatsAppModal() { document.getElementById('waModal').classList.add('hidden'); }
+
+    // Form
     function handleFormSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('formName').value;
@@ -848,148 +601,15 @@
       const phone = document.getElementById('formPhone').value;
       const city = document.getElementById('formCity').value;
       const service = document.getElementById('formService').value;
-      const msg = document.getElementById('formMessage').value || 'N/A';
 
-      const encoded = `Hi Elite360views,%0A%0AName: ${name}%0ABusiness: ${biz}%0APhone: ${phone}%0ACity: ${city}%0AService: ${service}%0AMessage: ${msg}`;
-      window.open(`https://wa.me/918527408464?text=${encoded}`, '_blank');
+      const text = `Hi Elite360views,%0A%0AName: ${name}%0ABusiness: ${biz}%0APhone: ${phone}%0ACity: ${city}%0AService: ${service}`;
+      window.open(`https://wa.me/918527408464?text=${text}`, '_blank');
     }
 
-    // INTERACTIVE CANVAS 360 PANORAMA SIMULATOR
-    const canvas = document.getElementById('tourCanvas');
-    const ctx = canvas.getContext('2d');
-    let yaw = 0;
-    let isDragging = false;
-    let startX = 0;
-    let currentScene = 'showroom';
-
-    const scenes = {
-      showroom: {
-        title: 'Jewellery Showroom Panorama',
-        pillars: ['#3A3020', '#66502A', '#8C703C'],
-        accents: '#D4AF37'
-      },
-      hotel: {
-        title: 'Boutique Hotel Lobby',
-        pillars: ['#1B263B', '#415A77', '#778DA9'],
-        accents: '#64DFDF'
-      },
-      banquet: {
-        title: 'Grand Banquet Ballroom',
-        pillars: ['#3D0C11', '#7209B7', '#B5179E'],
-        accents: '#F72585'
-      }
-    };
-
-    function resizeCanvas() {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-      drawScene();
-    }
-    window.addEventListener('resize', resizeCanvas);
-
-    function drawScene() {
-      const w = canvas.width;
-      const h = canvas.height;
-      const scene = scenes[currentScene];
-
-      ctx.fillStyle = '#08090C';
-      ctx.fillRect(0, 0, w, h);
-
-      // Draw perspective ceiling grid
-      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-      ctx.lineWidth = 1;
-      for (let i = -w; i < w * 2; i += 60) {
-        ctx.beginPath();
-        ctx.moveTo(i + (yaw % 60), 0);
-        ctx.lineTo(w / 2, h / 2);
-        ctx.stroke();
-      }
-
-      // Draw architectural pillars representing a 3D panoramic interior
-      const cols = scene.pillars;
-      const spacing = w * 0.45;
-      for (let i = -3; i <= 5; i++) {
-        let x = (i * spacing) - (yaw * 2.2 % (spacing * 4));
-        if (x > -200 && x < w + 200) {
-          ctx.fillStyle = cols[Math.abs(i) % cols.length];
-          ctx.fillRect(x, h * 0.25, 90, h * 0.55);
-
-          // Accent lighting edge
-          ctx.fillStyle = scene.accents;
-          ctx.fillRect(x + 85, h * 0.25, 4, h * 0.55);
-        }
-      }
-
-      // Floor reflection plane
-      let grad = ctx.createLinearGradient(0, h * 0.65, 0, h);
-      grad.addColorStop(0, 'rgba(15,17,23,0.85)');
-      grad.addColorStop(1, '#050608');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, h * 0.65, w, h * 0.35);
-
-      // Google Street View Navigator Hotspot in the Center
-      ctx.save();
-      ctx.translate(w / 2, h * 0.78);
-      ctx.beginPath();
-      ctx.arc(0, 0, 22, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(197, 160, 89, 0.25)';
-      ctx.fill();
-      ctx.strokeStyle = '#C5A059';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.beginPath();
-      ctx.moveTo(-6, -4);
-      ctx.lineTo(0, -12);
-      ctx.lineTo(6, -4);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // Touch & Mouse Listeners
-    canvas.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
+    // Init showroom on page load
+    window.addEventListener('load', () => {
+      initPannellum(tours.showroom);
     });
-    window.addEventListener('mouseup', () => isDragging = false);
-    canvas.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - startX;
-      startX = e.clientX;
-      yaw -= dx * 0.5;
-      drawScene();
-    });
-
-    canvas.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      startX = e.touches[0].clientX;
-    });
-    window.addEventListener('touchend', () => isDragging = false);
-    canvas.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - startX;
-      startX = e.touches[0].clientX;
-      yaw -= dx * 0.5;
-      drawScene();
-    });
-
-    function panScene(val) {
-      yaw += val;
-      drawScene();
-    }
-    function resetScene() {
-      yaw = 0;
-      drawScene();
-    }
-    function changeScene(key) {
-      currentScene = key;
-      document.getElementById('currentRoomLabel').innerText = scenes[key].title;
-      drawScene();
-    }
-
-    // Initial Trigger
-    setTimeout(resizeCanvas, 50);
   </script>
 </body>
 </html>
